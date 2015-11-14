@@ -36,8 +36,11 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".ui.MainActivity">
+        android:theme="@style/MyAppTheme">
+        <activity
+            android:name=".ui.MainActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -210,11 +213,11 @@
         <!-- 友盟App Key, 必须替换为您在友盟官网上申请到的. -->
         <meta-data
             android:name="UMENG_APPKEY"
-            android:value="4eaee02c527015373b000003" />
+            android:value="56472ad8e0f55aca6c000a96" />
         <!-- 友盟推送的app secret, 如果不使用友盟推送可以删除 -->
         <meta-data
             android:name="UMENG_MESSAGE_SECRET"
-            android:value="a499504e1326471ef496c4e55cac9268" />
+            android:value="11baf5ce8f65288ab8a326450cabe509" />
         <!--Umeng end-->
     </application>
 

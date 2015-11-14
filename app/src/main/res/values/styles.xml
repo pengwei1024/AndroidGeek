@@ -16,11 +16,11 @@
     </style>
 
     <!--默认样式-->
-    <style name="AppTheme" parent="AppBaseTheme">
+    <style name="MyAppTheme" parent="AppBaseTheme">
 
     </style>
 
-    <style name="AppTheme.TRANSPARENT" parent="AppTheme">
+    <style name="MyAppTheme.TRANSPARENT" parent="AppTheme">
         <!--背景模糊-->
         <!--<item name="android:backgroundDimEnabled">true</item>-->
         <item name="android:windowIsTranslucent">true</item>
@@ -28,7 +28,7 @@
     </style>
 
     <!--全屏样式-->
-    <style name="AppTheme.FullScreen" parent="AppTheme">
+    <style name="MyAppTheme.FullScreen" parent="AppTheme">
         <item name="android:windowFullscreen">true</item>
     </style>
 

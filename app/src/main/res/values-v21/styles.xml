@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="AppTheme" parent="@style/AppBaseTheme">
+    <style name="MyAppTheme" parent="@style/AppBaseTheme">
         <!-- 底部导航栏颜色 -->
         <item name="android:navigationBarColor">@android:color/black</item>
     </style>
