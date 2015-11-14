@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -90,8 +91,14 @@ public class BaseListFragment extends BaseFragment implements SwipeRefreshLayout
         return new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
-                lastVisibleItem = layoutManager.findLastVisibleItemPosition();
+                if (recyclerView.getLayoutManager() instanceof StaggeredGridLayoutManager){
+                    StaggeredGridLayoutManager layoutManager = (StaggeredGridLayoutManager) recyclerView.getLayoutManager();
+//                    lastVisibleItem = layoutManager.findLastVisibleItemPosition();
+                }
+                else if (recyclerView.getLayoutManager() instanceof LinearLayoutManager){
+                    LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                    lastVisibleItem = layoutManager.findLastVisibleItemPosition();
+                }
             }
 
             @Override

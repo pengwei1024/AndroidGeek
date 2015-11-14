@@ -11,6 +11,7 @@ import android.view.View;
 
 import com.apkfuns.androidgank.R;
 import com.apkfuns.androidgank.ui.base.BaseActivity;
+import com.apkfuns.androidgank.ui.fragments.GankIoFragment;
 import com.umeng.comm.core.CommunitySDK;
 import com.umeng.comm.core.impl.CommunityFactory;
 import com.umeng.comm.ui.fragments.CommunityMainFragment;
@@ -29,6 +30,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         toggle.syncState();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setCheckedItem(R.id.nav_gank);
     }
 
     @Override
@@ -60,16 +62,21 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.nav_camera:
+            case R.id.nav_community:
                 CommunitySDK mCommSDK = CommunityFactory.getCommSDK(this);
                 mCommSDK.initSDK(this);
                 CommunityMainFragment mFeedsFragment = new CommunityMainFragment();
                 mFeedsFragment.setBackButtonVisibility(View.INVISIBLE);
                 setFragment(mFeedsFragment);
                 break;
+            case R.id.nav_gank:
+                setFragment(new GankIoFragment());
+                break;
             default:
                 break;
         }
-        return false;
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 }

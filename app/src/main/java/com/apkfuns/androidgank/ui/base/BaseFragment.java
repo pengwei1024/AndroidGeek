@@ -9,10 +9,8 @@ import android.widget.Toast;
 
 import com.apkfuns.androidgank.R;
 import com.apkfuns.androidgank.utils.NetUtil;
-import com.apkfuns.androidgank.utils.OkHttpUtils;
-import com.squareup.okhttp.Callback;
+import com.apkfuns.androidgank.utils.OkHttpClientManager;
 import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
 
 import java.io.IOException;
 
@@ -59,9 +57,9 @@ public class BaseFragment extends Fragment implements BaseFunc {
                 url += String.format("&%s=%s", args[i], args[i + 1]);
             }
         }
-        OkHttpUtils.asyncGet(url, new Callback() {
+        OkHttpClientManager.getAsyn(url, new OkHttpClientManager.ResultCallback<String>() {
             @Override
-            public void onFailure(Request request, IOException e) {
+            public void onError(Request request, Exception e) {
                 String errorMsg = getString(R.string.msg_network_unreachable);
                 if (request != null && request.body() != null) {
                     errorMsg = request.body().toString();
@@ -72,13 +70,8 @@ public class BaseFragment extends Fragment implements BaseFunc {
             }
 
             @Override
-            public void onResponse(Response response) throws IOException {
-                if (response.isSuccessful()) {
-                    onRequestCallBack(requestCode, response.body().toString(), true);
-                } else {
-                    String msg = notNull(response) ? response.body().toString() : "请求异常";
-                    onRequestCallBack(requestCode, msg, false);
-                }
+            public void onResponse(String response) {
+                onRequestCallBack(requestCode, response, true);
             }
         });
     }
@@ -91,11 +84,7 @@ public class BaseFragment extends Fragment implements BaseFunc {
                 url += String.format("&%s=%s", args[i], args[i + 1]);
             }
         }
-        try {
-            return OkHttpUtils.syncGet(url).body().toString();
-        } catch (IOException e) {
-            return null;
-        }
+        return null;
     }
 
 }
