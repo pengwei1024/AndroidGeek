@@ -10,8 +10,8 @@
         <!-- 隐藏进度条 -->
         <item name="android:fadeScrollbars">true</item>
         <!-- 默认字体颜色 -->
-        <item name="android:textColorPrimary">@android:color/white</item>
-        <item name="android:textColor">@android:color/white</item>
+        <!--<item name="android:textColorPrimary">@android:color/white</item>-->
+        <!--<item name="android:textColor">@android:color/white</item>-->
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
