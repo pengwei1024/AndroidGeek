@@ -11,7 +11,7 @@ android {
         versionCode 1
         versionName "1.0.0"
         // Enabling multidex support.
-        multiDexEnabled true
+        //multiDexEnabled true
     }
     buildTypes {
         release {
@@ -19,9 +19,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    dexOptions {
-        javaMaxHeapSize "4g"
-    }
+//    dexOptions {
+//        javaMaxHeapSize "4g"
+//    }
 }
 
 dependencies {
@@ -31,7 +31,6 @@ dependencies {
     compile 'com.android.support:support-v4:23.0.+'
     compile 'com.android.support:design:23.0.1'
     compile 'com.android.support:recyclerview-v7:23.0.0+'
-    compile 'com.android.support:multidex:1.0.1'
     compile 'com.apkfuns.simplerecycleradapter:simplerecycleradapter:1.6'
     compile 'com.squareup.okhttp:okhttp:2.4.0'
     compile 'com.squareup.okio:okio:1.5.0'
