@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="AppTheme" parent="@style/AppBaseTheme">
+    <style name="MyAppTheme" parent="@style/AppBaseTheme">
         <!--沉浸式状态栏-->
         <item name="android:windowTranslucentStatus">true</item>
     </style>

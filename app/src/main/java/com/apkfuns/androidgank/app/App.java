@@ -1,13 +1,13 @@
 package com.apkfuns.androidgank.app;
 
+import android.app.Application;
 import android.content.Context;
 import android.support.multidex.MultiDex;
-import android.support.multidex.MultiDexApplication;
 
 /**
  * Created by pengwei08 on 15/11/14.
  */
-public class App extends MultiDexApplication {
+public class App extends Application {
 
     @Override
     protected void attachBaseContext(Context base) {
