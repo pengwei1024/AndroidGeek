@@ -11,19 +11,29 @@ import java.io.IOException;
  * Created by pengwei08 on 15/11/14.
  */
 public class OkHttpUtils {
-    private OkHttpClient httpClient = new OkHttpClient();
+    private static OkHttpClient httpClient = new OkHttpClient();
 
-    public void syncGet(String url) throws IOException {
+    /**
+     * 同步GET请求
+     *
+     * @param url
+     * @throws IOException
+     */
+    public static Response syncGet(String url) throws IOException {
         Request request = new Request.Builder()
                 .url(url)
                 .build();
         Response response = httpClient.newCall(request).execute();
-        if (response.isSuccessful()) {
-
-        }
+        return response;
     }
 
-    public void asyncGet(String url, Callback callback) {
+    /**
+     * 异步GET请求
+     *
+     * @param url
+     * @param callback
+     */
+    public static void asyncGet(String url, Callback callback) {
         Request request = new Request.Builder()
                 .url(url)
                 .build();

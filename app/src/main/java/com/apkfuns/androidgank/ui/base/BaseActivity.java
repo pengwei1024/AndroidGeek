@@ -4,6 +4,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -122,13 +123,27 @@ public class BaseActivity extends AppCompatActivity implements BaseFunc {
     }
 
     @Override
-    public <T extends View> T inflateView(int layoutId) {
-        return (T) LayoutInflater.from(this).inflate(layoutId, null);
+    public View inflateView(int layoutId) {
+        return LayoutInflater.from(this).inflate(layoutId,null, false);
     }
 
     public <T extends View> T findView(int viewId) {
         return (T) findViewById(viewId);
     }
 
+    /*  -------------网络请求------------ */
+    @Override
+    public void onRequestCallBack(int requestCode, String result, boolean success) {
 
+    }
+
+    @Override
+    public void asyncGet(String url, int requestCode, String... args) {
+
+    }
+
+    @Override
+    public String syncGet(String url, int requestCode, String... args) {
+        return null;
+    }
 }

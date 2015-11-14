@@ -6,4 +6,6 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="msg_network_unreachable">网络无法访问</string>
 </resources>

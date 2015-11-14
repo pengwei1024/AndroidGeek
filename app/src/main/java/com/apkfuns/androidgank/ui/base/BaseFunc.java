@@ -2,10 +2,12 @@ package com.apkfuns.androidgank.ui.base;
 
 import android.view.View;
 
+import com.squareup.okhttp.Callback;
+
 /**
  * Created by pengwei on 15/11/14.
  */
-public interface BaseFunc {
+interface BaseFunc {
     /**
      * 对象不为空
      *
@@ -25,14 +27,42 @@ public interface BaseFunc {
      *
      * @param msg
      */
-    void toast(String msg, Object...args);
+    void toast(String msg, Object... args);
 
     /**
      * 导入布局
+     *
      * @param layoutId
-     * @param <T>
      * @return
      */
     <T extends View> T inflateView(int layoutId);
 
+
+    /* --------网络请求------- */
+
+    /**
+     * 网络请求回调
+     *
+     * @param requestCode
+     * @param result
+     * @param success
+     */
+    void onRequestCallBack(int requestCode, String result, boolean success);
+
+    /**
+     * 异步请求
+     * @param url
+     * @param requestCode
+     * @param args
+     */
+    void asyncGet(String url, int requestCode, String... args);
+
+    /**
+     * 同步请求，需要自己回调onRequestCallBack()方法
+     * @param url
+     * @param requestCode
+     * @param args
+     * @return
+     */
+    String syncGet(String url, int requestCode, String... args);
 }
