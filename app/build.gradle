@@ -10,6 +10,8 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0.0"
+        // Enabling multidex support.
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -26,8 +28,10 @@ dependencies {
     compile 'com.android.support:support-v4:23.0.+'
     compile 'com.android.support:design:23.1.0'
     compile 'com.android.support:recyclerview-v7:23.0.0+'
+    compile 'com.android.support:multidex:1.0.1'
     compile 'com.apkfuns.simplerecycleradapter:simplerecycleradapter:1.6'
     compile 'com.squareup.okhttp:okhttp:2.4.0'
     compile 'com.squareup.okio:okio:1.5.0'
     compile 'com.commit451:PhotoView:1.2.4'
+    compile project(':umeng_libs')
 }
