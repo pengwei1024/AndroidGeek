@@ -28,29 +28,24 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.ImageView;
-import android.widget.RadioButton;
 
+import com.ningso.umeng_libs.R;
 import com.umeng.comm.core.beans.CommConfig;
 import com.umeng.comm.core.beans.CommUser;
 import com.umeng.comm.core.beans.MessageCount;
 import com.umeng.comm.core.constants.Constants;
-import com.umeng.comm.core.listeners.Listeners.LoginOnViewClickListener;
 import com.umeng.comm.core.utils.ResFinder;
-import com.umeng.comm.core.utils.ResFinder.ResType;
 import com.umeng.comm.ui.activities.FindActivity;
 import com.umeng.comm.ui.mvpview.MvpUnReadMsgView;
 import com.umeng.comm.ui.presenter.impl.NullPresenter;
-import com.umeng.comm.ui.widgets.SegmentView;
-import com.umeng.comm.ui.widgets.SegmentView.OnItemCheckedListener;
 
 /**
  * 社区首页，包含关注、推荐、话题三个tab的页面，通过ViewPager管理页面之间的切换.
@@ -58,9 +53,9 @@ import com.umeng.comm.ui.widgets.SegmentView.OnItemCheckedListener;
 public class CommunityMainFragment extends BaseFragment<Void, NullPresenter> implements
         OnClickListener, MvpUnReadMsgView {
 
+    private TabLayout mTabLayout;
     private ViewPager mViewPager;
     private String[] mTitles;
-    private Fragment mCurrentFragment;
     /**
      * Feed流页面
      */
@@ -86,24 +81,24 @@ public class CommunityMainFragment extends BaseFragment<Void, NullPresenter> imp
      * title的根布局
      */
     private View mTitleLayout;
-    /**
-     * 右上角的个人信息Button
-     */
-    private ImageView mProfileBtn;
+//    /**
+//     * 右上角的个人信息Button
+//     */
+//    private ImageView mProfileBtn;
 
     private String mContainerClass;
-    /**
-     * tab视图
-     */
-    private SegmentView mSegmentView;
+//    /**
+//     * tab视图
+//     */
+//    private SegmentView mSegmentView;
     /**
      * 未读消息的数量
      */
     private MessageCount mUnreadMsg = CommConfig.getConfig().mMessageCount;
-    /**
-     * 含有未读消息时的红点视图
-     */
-    private View mBadgeView;
+//    /**
+//     * 含有未读消息时的红点视图
+//     */
+//    private View mBadgeView;
 
     @Override
     protected int getFragmentLayout() {
@@ -112,10 +107,32 @@ public class CommunityMainFragment extends BaseFragment<Void, NullPresenter> imp
 
     protected void initWidgets() {
         mContainerClass = getActivity().getClass().getName();
-        initTitle(mRootView);
+        mTabLayout = (TabLayout) mRootView.findViewById(ResFinder.getId("tabs_layout"));
+        mViewPager = (ViewPager) mRootView.findViewById(ResFinder.getId("viewPager"));
         initFragment();
-        initViewPager(mRootView);
+        setFragment(mMainFeedFragment, mMainFeedFragment, mTopicFragment);
+        setUpWithTabLayout();
         registerInitSuccessBroadcast();
+    }
+
+    private void setFragment(BaseFragment... fragment) {
+        setupWithViewPager(fragment);
+    }
+
+    private void setupWithViewPager(BaseFragment[] fragments) {
+        mTitles=getResources().getStringArray(R.array.umeng_comm_feed_titles);
+      //  mTitles = getResources().getStringArray(ResFinder.getResourceId(ResType.ARRAY, "umeng_comm_feed_titles"));
+        CommFragmentPageAdapter mViewPagerAdapter = new CommFragmentPageAdapter(getChildFragmentManager(), mTitles, fragments);
+        mViewPager.setAdapter(mViewPagerAdapter);
+        mViewPager.setCurrentItem(0);
+    }
+
+
+    private void setUpWithTabLayout() {
+        mTabLayout.addTab(mTabLayout.newTab().setText("关注"));
+        mTabLayout.addTab(mTabLayout.newTab().setText("推荐"));
+        mTabLayout.addTab(mTabLayout.newTab().setText("话题"));
+        mTabLayout.setupWithViewPager(mViewPager);
     }
 
     /**
@@ -124,8 +141,7 @@ public class CommunityMainFragment extends BaseFragment<Void, NullPresenter> imp
      * @param rootView
      */
     private void initTitle(View rootView) {
-        mTitles = getResources().getStringArray(
-                ResFinder.getResourceId(ResType.ARRAY, "umeng_comm_feed_titles"));
+
         int titleLayoutResId = ResFinder.getId("topic_action_bar");
         mTitleLayout = rootView.findViewById(titleLayoutResId);
         mTitleLayout.setVisibility(View.GONE);
@@ -138,45 +154,45 @@ public class CommunityMainFragment extends BaseFragment<Void, NullPresenter> imp
         }
 
         mTitleLayout.setVisibility(mTitleVisible);
-
-        mBadgeView = findViewById(ResFinder.getId("umeng_comm_badge_view"));
-        mBadgeView.setVisibility(View.INVISIBLE);
-        //
-        mProfileBtn = (ImageView) rootView
-                .findViewById(ResFinder.getId("umeng_comm_user_info_btn"));
-        mProfileBtn.setOnClickListener(new LoginOnViewClickListener() {
-            @Override
-            protected void doAfterLogin(View v) {
-                if (mBadgeView != null) {
-                    mBadgeView.setVisibility(View.INVISIBLE);
-                }
-                gotoFindActivity(CommConfig.getConfig().loginedUser);
-            }
-        });
-
-        mSegmentView = (SegmentView) rootView.findViewById(ResFinder
-                .getId("umeng_comm_segment_view"));
-        // 设置tabs
-        mSegmentView.setTabs(mTitles);
-        mSegmentView.selectItemIndex(0);
-        // 设置点击事件
-        mSegmentView.setOnItemCheckedListener(new OnItemCheckedListener() {
-
-            @Override
-            public void onCheck(RadioButton button, int position, String title) {
-                mViewPager.setCurrentItem(position, true);
-            }
-        });
+//
+//        mBadgeView = findViewById(ResFinder.getId("umeng_comm_badge_view"));
+//        mBadgeView.setVisibility(View.INVISIBLE);
+//        //
+//        mProfileBtn = (ImageView) rootView
+//                .findViewById(ResFinder.getId("umeng_comm_user_info_btn"));
+//        mProfileBtn.setOnClickListener(new LoginOnViewClickListener() {
+//            @Override
+//            protected void doAfterLogin(View v) {
+//                if (mBadgeView != null) {
+//                    mBadgeView.setVisibility(View.INVISIBLE);
+//                }
+//                gotoFindActivity(CommConfig.getConfig().loginedUser);
+//            }
+//        });
+//
+//        mSegmentView = (SegmentView) rootView.findViewById(ResFinder
+//                .getId("umeng_comm_segment_view"));
+//        // 设置tabs
+//        mSegmentView.setTabs(mTitles);
+//        mSegmentView.selectItemIndex(0);
+//        // 设置点击事件
+//        mSegmentView.setOnItemCheckedListener(new OnItemCheckedListener() {
+//
+//            @Override
+//            public void onCheck(RadioButton button, int position, String title) {
+//                mViewPager.setCurrentItem(position, true);
+//            }
+//        });
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        if (mUnreadMsg.unReadTotal > 0) {
-            mBadgeView.setVisibility(View.VISIBLE);
-        } else {
-            mBadgeView.setVisibility(View.INVISIBLE);
-        }
+//        if (mUnreadMsg.unReadTotal > 0) {
+//            mBadgeView.setVisibility(View.VISIBLE);
+//        } else {
+//            mBadgeView.setVisibility(View.INVISIBLE);
+//        }
     }
 
     public ViewPager getViewPager() {
@@ -221,56 +237,64 @@ public class CommunityMainFragment extends BaseFragment<Void, NullPresenter> imp
         }
     }
 
-    /**
-     * 初始化ViewPager VIew</br>
-     *
-     * @param rootView
-     */
-    private void initViewPager(View rootView) {
-        mViewPager = (ViewPager) rootView.findViewById(ResFinder.getId("viewPager"));
-        mViewPager.setOffscreenPageLimit(mTitles.length);
-        CommFragmentPageAdapter adapter = new CommFragmentPageAdapter(getChildFragmentManager());
-        mViewPager.setAdapter(adapter);
-        mViewPager.setOnPageChangeListener(new OnPageChangeListener() {
-
-            @Override
-            public void onPageSelected(int page) {
-//                if (mCurrentFragment == mMainFeedFragment){
-//                    if (mMainFeedFragment.IsCommentLayoutShow()){
-//                        return;
-//                    }
-//                }
-                mCurrentFragment = getFragment(page);
-                // mTitleTextView.selectItemWithIndex(page);
-                mSegmentView.selectItemIndex(page);
-            }
-
-            @Override
-            public void onPageScrolled(int arg0, float arg1, int arg2) {
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int arg0) {
-            }
-        });
-    }
+//    /**
+//     * 初始化ViewPager VIew</br>
+//     *
+//     * @param rootView
+//     */
+//    private void initViewPager(View rootView) {
+//        mViewPager = (ViewPager) rootView.findViewById(ResFinder.getId("viewPager"));
+//        mViewPager.setOffscreenPageLimit(mTitles.length);
+//        CommFragmentPageAdapter adapter = new CommFragmentPageAdapter(getChildFragmentManager());
+//        mViewPager.setAdapter(adapter);
+//        mViewPager.setOnPageChangeListener(new OnPageChangeListener() {
+//
+//            @Override
+//            public void onPageSelected(int page) {
+////                if (mCurrentFragment == mMainFeedFragment){
+////                    if (mMainFeedFragment.IsCommentLayoutShow()){
+////                        return;
+////                    }
+////                }
+//                mCurrentFragment = getFragment(page);
+//                // mTitleTextView.selectItemWithIndex(page);
+//                mSegmentView.selectItemIndex(page);
+//            }
+//
+//            @Override
+//            public void onPageScrolled(int arg0, float arg1, int arg2) {
+//            }
+//
+//            @Override
+//            public void onPageScrollStateChanged(int arg0) {
+//            }
+//        });
+    //   }
 
     class CommFragmentPageAdapter extends FragmentPagerAdapter {
+        private String[] titles;
+        private Fragment[] fragments;
 
-        public CommFragmentPageAdapter(FragmentManager fm) {
+        public CommFragmentPageAdapter(FragmentManager fm, String[] titles, Fragment[] fragments) {
             super(fm);
+            this.titles = titles;
+            this.fragments = fragments;
         }
 
         @Override
-        public Fragment getItem(int pos) {
-            return getFragment(pos);
+        public Fragment getItem(int position) {
+            return fragments[position];
         }
 
         @Override
         public int getCount() {
-            return mTitles.length;
+            return fragments.length;
         }
 
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return titles[position];
+        }
     }
 
     /**
@@ -280,16 +304,6 @@ public class CommunityMainFragment extends BaseFragment<Void, NullPresenter> imp
         mMainFeedFragment = new AllFeedsFragment();
         mRecommendFragment = new RecommendFeedFragment();
         mTopicFragment = TopicFragment.newTopicFragment();
-        mCurrentFragment = mMainFeedFragment;// 默认是MainFeedFragment
-    }
-
-    /**
-     * 获取当前页面被选中的Fragment</br>
-     *
-     * @return
-     */
-    public Fragment getCurrentFragment() {
-        return mCurrentFragment;
     }
 
     /**
@@ -342,7 +356,8 @@ public class CommunityMainFragment extends BaseFragment<Void, NullPresenter> imp
     public void onFetchUnReadMsg(MessageCount unreadMsg) {
         this.mUnreadMsg = unreadMsg;
         if (mUnreadMsg.unReadTotal > 0) {
-            mBadgeView.setVisibility(View.VISIBLE);
+            //// TODO: 15/11/15
+            // mBadgeView.setVisibility(View.VISIBLE);
         }
     }
 

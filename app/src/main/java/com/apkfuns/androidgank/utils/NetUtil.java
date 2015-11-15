@@ -1,6 +1,5 @@
 package com.apkfuns.androidgank.utils;
 
-import android.app.Activity;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -17,10 +16,15 @@ public class NetUtil {
      * @return
      */
     public static boolean isConnect(Context context) {
-        ConnectivityManager con = (ConnectivityManager) context.getSystemService(Activity.CONNECTIVITY_SERVICE);
-        boolean wifi = con.getNetworkInfo(ConnectivityManager.TYPE_WIFI).isConnectedOrConnecting();
-        boolean internet = con.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).isConnectedOrConnecting();
-        return wifi | internet;
+        if (context == null) {
+            return false;
+        }
+        ConnectivityManager manager = (ConnectivityManager) context
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkinfo = manager.getActiveNetworkInfo();
+
+        return networkinfo != null && networkinfo.isAvailable()
+                && networkinfo.isConnected();
     }
 
     /**
