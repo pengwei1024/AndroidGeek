@@ -1,5 +1,6 @@
 package com.apkfuns.androidgank.ui;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.widget.NestedScrollView;
@@ -16,6 +17,7 @@ import com.apkfuns.androidgank.ui.fragments.GankContentItemFragment;
 import com.apkfuns.androidgank.ui.fragments.GankIoFragment;
 import com.apkfuns.androidgank.utils.JsonHelper;
 import com.bumptech.glide.Glide;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.reflect.TypeToken;
 import com.umeng.comm.ui.dialogs.ImageBrowser;
 
@@ -52,9 +54,8 @@ public class GankIoContent extends BaseTabActivity implements View.OnClickListen
                     dateParam[0], dateParam[1], dateParam[2]), 0);
         }
         imageUrl = getIntent().getStringExtra("imageUrl");
-        ImageView imageView = findView(R.id.backdrop);
-        imageView.setOnClickListener(this);
-        Glide.with(this).load(imageUrl).into(imageView);
+        SimpleDraweeView simpleDraweeView = findView(R.id.backdrop);
+        simpleDraweeView.setImageURI(Uri.parse(imageUrl));
         CollapsingToolbarLayout collapsingToolbar = findView(R.id.collapsing_toolbar);
         collapsingToolbar.setTitle(date);
     }

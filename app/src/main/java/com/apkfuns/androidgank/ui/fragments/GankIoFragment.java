@@ -1,5 +1,6 @@
 package com.apkfuns.androidgank.ui.fragments;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
@@ -15,6 +16,7 @@ import com.apkfuns.androidgank.utils.OkHttpClientManager;
 import com.apkfuns.simplerecycleradapter.RVHolder;
 import com.apkfuns.simplerecycleradapter.SimpleRecyclerAdapter;
 import com.bumptech.glide.Glide;
+import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.List;
 
@@ -90,8 +92,8 @@ public class GankIoFragment extends BaseListFragment {
         @Override
         public void onBindView(final RVHolder holder, int position, int itemViewType, GankWelfareItem.ResultsEntity resultsEntity) {
             holder.setTextView(R.id.time, getDate(resultsEntity.getPublishedAt()));
-            Glide.with(holder.getContext()).load(resultsEntity.getUrl())
-                    .into(holder.getImageView(R.id.imageView));
+            SimpleDraweeView simpleDraweeView = holder.getView(R.id.imageView);
+            simpleDraweeView.setImageURI(Uri.parse(resultsEntity.getUrl()));
         }
 
         @Override

@@ -10,7 +10,6 @@ import com.apkfuns.androidgank.ui.WebBrowser;
 import com.apkfuns.androidgank.ui.base.BaseListFragment;
 import com.apkfuns.simplerecycleradapter.RVHolder;
 import com.apkfuns.simplerecycleradapter.SimpleRecyclerAdapter;
-import com.umeng.comm.ui.activities.BrowserActivity;
 
 import java.util.ArrayList;
 import java.util.List;
