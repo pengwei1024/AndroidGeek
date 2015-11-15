@@ -108,6 +108,7 @@ public class GankIoFragment extends BaseListFragment {
                             int screenWidth = getActivity().getWindowManager().getDefaultDisplay().getWidth();
                             simpleDraweeView.getLayoutParams().height =
                                     imageInfo.getHeight() * screenWidth / (2 * imageInfo.getWidth());
+                            simpleDraweeView.requestLayout();
                         }
                     })
                     .setUri(Uri.parse(resultsEntity.getUrl())).build();
