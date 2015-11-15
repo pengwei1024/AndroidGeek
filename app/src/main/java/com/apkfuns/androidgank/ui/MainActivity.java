@@ -31,6 +31,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setCheckedItem(R.id.nav_gank);
+        setFragment(GankIoFragment.getInstance());
     }
 
     @Override
@@ -70,7 +71,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 setFragment(mFeedsFragment);
                 break;
             case R.id.nav_gank:
-                setFragment(new GankIoFragment());
+                setFragment(GankIoFragment.getInstance());
                 break;
             default:
                 break;

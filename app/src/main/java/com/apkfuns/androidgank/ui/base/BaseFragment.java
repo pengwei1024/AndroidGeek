@@ -39,6 +39,10 @@ public class BaseFragment extends Fragment implements BaseFunc {
         return LayoutInflater.from(getActivity()).inflate(layoutId, null);
     }
 
+    public void setTitle(String title) {
+        getActivity().setTitle(title);
+    }
+
     /*  -------------网络请求------------ */
     @Override
     public void onRequestCallBack(int requestCode, String result, boolean success) {

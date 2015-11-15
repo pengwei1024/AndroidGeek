@@ -47,6 +47,8 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".ui.GankIoContent"/>
+
         <!--Umeng start-->
         <!-- feed主页面 -->
         <activity
