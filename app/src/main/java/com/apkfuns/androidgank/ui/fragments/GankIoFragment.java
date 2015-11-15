@@ -50,7 +50,6 @@ public class GankIoFragment extends BaseListFragment {
     @Override
     public void onRequestCallBack(int requestCode, String result, boolean success) {
         super.onRequestCallBack(requestCode, result, success);
-        Log.d("abcd", "******" + result);
         if (success) {
             GankWelfareItem item = JsonHelper.fromJson(result, GankWelfareItem.class);
             if (notNull(item) && !item.isError()) {
@@ -105,6 +104,7 @@ public class GankIoFragment extends BaseListFragment {
 
         /**
          * 获取发布日期
+         *
          * @param publishedAt
          * @return
          */

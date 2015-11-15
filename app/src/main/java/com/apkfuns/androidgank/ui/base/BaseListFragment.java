@@ -3,6 +3,7 @@ package com.apkfuns.androidgank.ui.base;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -19,9 +20,10 @@ public class BaseListFragment extends BaseFragment implements SwipeRefreshLayout
 
     protected SwipeRefreshLayout mSwipeRefreshLayout;
     protected RecyclerView mRecyclerView;
-    // 最后可见的item位置
-    private int lastVisibleItem;
+    private int lastVisibleItemPosition;
+    private int[] lastPositions;
     protected View rootView;
+    private int currentScrollState = 0;
 
     public int getContentLayoutId() {
         return R.layout.view_recycler_view;
@@ -93,19 +95,33 @@ public class BaseListFragment extends BaseFragment implements SwipeRefreshLayout
         return new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                if (recyclerView.getLayoutManager() instanceof StaggeredGridLayoutManager) {
-                    StaggeredGridLayoutManager layoutManager = (StaggeredGridLayoutManager) recyclerView.getLayoutManager();
-//                    lastVisibleItem = layoutManager.findLastVisibleItemPosition();
-                } else if (recyclerView.getLayoutManager() instanceof LinearLayoutManager) {
-                    LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
-                    lastVisibleItem = layoutManager.findLastVisibleItemPosition();
+                RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
+                if (layoutManager instanceof LinearLayoutManager) {
+                    lastVisibleItemPosition = ((LinearLayoutManager) layoutManager)
+                            .findLastVisibleItemPosition();
+                } else if (layoutManager instanceof GridLayoutManager) {
+                    lastVisibleItemPosition = ((GridLayoutManager) layoutManager)
+                            .findLastVisibleItemPosition();
+                } else if (layoutManager instanceof StaggeredGridLayoutManager) {
+                    StaggeredGridLayoutManager staggeredGridLayoutManager
+                            = (StaggeredGridLayoutManager) layoutManager;
+                    if (lastPositions == null) {
+                        lastPositions = new int[staggeredGridLayoutManager.getSpanCount()];
+                    }
+                    staggeredGridLayoutManager.findLastVisibleItemPositions(lastPositions);
+                    lastVisibleItemPosition = findMax(lastPositions);
                 }
+
             }
 
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                if (newState == RecyclerView.SCROLL_STATE_IDLE
-                        && lastVisibleItem + 1 == recyclerView.getAdapter().getItemCount()) {
+                currentScrollState = newState;
+                RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
+                int visibleItemCount = layoutManager.getChildCount();
+                int totalItemCount = layoutManager.getItemCount();
+                if ((visibleItemCount > 0 && currentScrollState == RecyclerView.SCROLL_STATE_IDLE &&
+                        (lastVisibleItemPosition) >= totalItemCount - 1)) {
                     setRefreshing(true);
                     onLoadMore();
                 }
@@ -150,6 +166,16 @@ public class BaseListFragment extends BaseFragment implements SwipeRefreshLayout
      */
     protected boolean onLoadMoreEnable() {
         return true;
+    }
+
+    private int findMax(int[] lastPositions) {
+        int max = lastPositions[0];
+        for (int value : lastPositions) {
+            if (value > max) {
+                max = value;
+            }
+        }
+        return max;
     }
 
 
