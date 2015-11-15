@@ -13,6 +13,9 @@ import android.widget.Toast;
 
 import com.apkfuns.androidgank.R;
 import com.apkfuns.androidgank.helper.LayoutParamsHelper;
+import com.apkfuns.androidgank.utils.NetUtil;
+import com.apkfuns.androidgank.utils.OkHttpClientManager;
+import com.squareup.okhttp.Request;
 
 /**
  * Created by pengwei08 on 15/11/14.
@@ -134,12 +137,38 @@ public class BaseActivity extends AppCompatActivity implements BaseFunc {
     /*  -------------网络请求------------ */
     @Override
     public void onRequestCallBack(int requestCode, String result, boolean success) {
-
+        if (!NetUtil.isConnect(this)) {
+            toast("请保持网络连接");
+        } else if (!success) {
+            toast("请求出现异常");
+        }
     }
 
     @Override
-    public void asyncGet(String url, int requestCode, String... args) {
+    public void asyncGet(String url, final int requestCode, String... args) {
+        if (notNull(args) && args.length > 0 && args.length % 2 == 0) {
+            url += (url.contains("?") ? "" : "?");
+            for (int i = 0; i < args.length; i = i + 2) {
+                url += String.format("&%s=%s", args[i], args[i + 1]);
+            }
+        }
+        OkHttpClientManager.getAsyn(url, new OkHttpClientManager.ResultCallback<String>() {
+            @Override
+            public void onError(Request request, Exception e) {
+                String errorMsg = getString(R.string.msg_network_unreachable);
+                if (request != null && request.body() != null) {
+                    errorMsg = request.body().toString();
+                } else if (e != null) {
+                    errorMsg = e.getMessage();
+                }
+                onRequestCallBack(requestCode, errorMsg, false);
+            }
 
+            @Override
+            public void onResponse(String response) {
+                onRequestCallBack(requestCode, response, true);
+            }
+        });
     }
 
     @Override

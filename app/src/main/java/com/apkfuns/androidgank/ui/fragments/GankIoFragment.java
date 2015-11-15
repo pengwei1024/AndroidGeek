@@ -1,5 +1,8 @@
 package com.apkfuns.androidgank.ui.fragments;
 
+import android.graphics.Point;
+import android.graphics.drawable.Animatable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
@@ -15,6 +18,12 @@ import com.apkfuns.androidgank.utils.OkHttpClientManager;
 import com.apkfuns.simplerecycleradapter.RVHolder;
 import com.apkfuns.simplerecycleradapter.SimpleRecyclerAdapter;
 import com.bumptech.glide.Glide;
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.controller.BaseControllerListener;
+import com.facebook.drawee.controller.ControllerListener;
+import com.facebook.drawee.interfaces.DraweeController;
+import com.facebook.drawee.view.SimpleDraweeView;
+import com.facebook.imagepipeline.image.ImageInfo;
 
 import java.util.List;
 
@@ -50,10 +59,9 @@ public class GankIoFragment extends BaseListFragment {
     @Override
     public void onRequestCallBack(int requestCode, String result, boolean success) {
         super.onRequestCallBack(requestCode, result, success);
-        Log.d("abcd", "******" + result);
         if (success) {
             GankWelfareItem item = JsonHelper.fromJson(result, GankWelfareItem.class);
-            if (notNull(item)) {
+            if (notNull(item) && !item.isError()) {
                 if (notNull(adapter)) {
                     adapter.addAll(item.getResults());
                 } else {
@@ -89,15 +97,52 @@ public class GankIoFragment extends BaseListFragment {
         }
 
         @Override
-        public void onBindView(final RVHolder holder, int position, int itemViewType, GankWelfareItem.ResultsEntity resultsEntity) {
-            holder.setTextView(R.id.time, resultsEntity.getPublishedAt().substring(0, 10));
-            Glide.with(holder.getContext()).load(resultsEntity.getUrl()).into(holder.getImageView(R.id.imageView));
+        public void onBindView(final RVHolder holder, final int position, int itemViewType, GankWelfareItem.ResultsEntity resultsEntity) {
+            holder.setTextView(R.id.time, getDate(resultsEntity.getPublishedAt()));
+            final SimpleDraweeView simpleDraweeView = holder.getView(R.id.imageView);
+            DraweeController controller = Fresco.newDraweeControllerBuilder()
+                    .setControllerListener(new BaseControllerListener<ImageInfo>() {
+                        @Override
+                        public void onFinalImageSet(String id, ImageInfo imageInfo, Animatable animatable) {
+                            super.onFinalImageSet(id, imageInfo, animatable);
+                            int screenWidth = getActivity().getWindowManager().getDefaultDisplay().getWidth();
+                            simpleDraweeView.getLayoutParams().height =
+                                    imageInfo.getHeight() * screenWidth / (2 * imageInfo.getWidth());
+                            simpleDraweeView.requestLayout();
+                        }
+                    })
+                    .setUri(Uri.parse(resultsEntity.getUrl())).build();
+            simpleDraweeView.setController(controller);
         }
 
         @Override
         public void onItemClick(RVHolder holder, View view, int position, GankWelfareItem.ResultsEntity item) {
-            holder.startActivity(GankIoContent.class);
+            Bundle bundle = new Bundle();
+            bundle.putString("date", getDate(item.getPublishedAt()));
+            bundle.putString("imageUrl", item.getUrl());
+            holder.startActivity(GankIoContent.class, bundle);
         }
+
+        /**
+         * 获取发布日期
+         *
+         * @param publishedAt
+         * @return
+         */
+        private String getDate(String publishedAt) {
+            if (notEmpty(publishedAt) && publishedAt.length() >= 10) {
+                return publishedAt.substring(0, 10);
+            }
+            return "";
+        }
+
+        ControllerListener controllerListener = new BaseControllerListener<ImageInfo>() {
+            @Override
+            public void onFinalImageSet(String id, ImageInfo imageInfo, Animatable animatable) {
+                super.onFinalImageSet(id, imageInfo, animatable);
+                toast("" + imageInfo.getHeight());
+            }
+        };
     }
 
 }

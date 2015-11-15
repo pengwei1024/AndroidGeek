@@ -12,6 +12,7 @@ import android.view.View;
 import com.apkfuns.androidgank.R;
 import com.apkfuns.androidgank.ui.base.BaseActivity;
 import com.apkfuns.androidgank.ui.fragments.GankIoFragment;
+import com.apkfuns.androidgank.ui.fragments.WebBrowserFragment;
 import com.umeng.comm.core.CommunitySDK;
 import com.umeng.comm.core.impl.CommunityFactory;
 import com.umeng.comm.ui.fragments.CommunityMainFragment;
@@ -72,6 +73,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 break;
             case R.id.nav_gank:
                 setFragment(GankIoFragment.getInstance());
+                break;
+            case R.id.nav_github_trending:
+                setFragment(WebBrowserFragment.getInstance("https://github.com/trending?l=java"));
                 break;
             default:
                 break;
