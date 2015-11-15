@@ -7,8 +7,15 @@ import android.app.Application;
  */
 public class App extends Application {
 
+    private static App single;
+
     @Override
     public void onCreate() {
         super.onCreate();
+        single = this;
+    }
+
+    public static App get(){
+        return single;
     }
 }

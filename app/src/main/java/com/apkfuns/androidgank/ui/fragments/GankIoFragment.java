@@ -53,7 +53,7 @@ public class GankIoFragment extends BaseListFragment {
         Log.d("abcd", "******" + result);
         if (success) {
             GankWelfareItem item = JsonHelper.fromJson(result, GankWelfareItem.class);
-            if (notNull(item)) {
+            if (notNull(item) && !item.isError()) {
                 if (notNull(adapter)) {
                     adapter.addAll(item.getResults());
                 } else {
@@ -90,13 +90,29 @@ public class GankIoFragment extends BaseListFragment {
 
         @Override
         public void onBindView(final RVHolder holder, int position, int itemViewType, GankWelfareItem.ResultsEntity resultsEntity) {
-            holder.setTextView(R.id.time, resultsEntity.getPublishedAt().substring(0, 10));
-            Glide.with(holder.getContext()).load(resultsEntity.getUrl()).into(holder.getImageView(R.id.imageView));
+            holder.setTextView(R.id.time, getDate(resultsEntity.getPublishedAt()));
+            Glide.with(holder.getContext()).load(resultsEntity.getUrl())
+                    .into(holder.getImageView(R.id.imageView));
         }
 
         @Override
         public void onItemClick(RVHolder holder, View view, int position, GankWelfareItem.ResultsEntity item) {
-            holder.startActivity(GankIoContent.class);
+            Bundle bundle = new Bundle();
+            bundle.putString("date", getDate(item.getPublishedAt()));
+            bundle.putString("imageUrl", item.getUrl());
+            holder.startActivity(GankIoContent.class, bundle);
+        }
+
+        /**
+         * 获取发布日期
+         * @param publishedAt
+         * @return
+         */
+        private String getDate(String publishedAt) {
+            if (notEmpty(publishedAt) && publishedAt.length() >= 10) {
+                return publishedAt.substring(0, 10);
+            }
+            return "";
         }
     }
 

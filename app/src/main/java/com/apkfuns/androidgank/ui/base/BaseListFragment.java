@@ -39,6 +39,8 @@ public class BaseListFragment extends BaseFragment implements SwipeRefreshLayout
         mSwipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeRefreshLayout);
         if (onRefreshEnable()) {
             mSwipeRefreshLayout.setOnRefreshListener(this);
+        } else {
+            mSwipeRefreshLayout.setEnabled(false);
         }
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -91,11 +93,10 @@ public class BaseListFragment extends BaseFragment implements SwipeRefreshLayout
         return new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                if (recyclerView.getLayoutManager() instanceof StaggeredGridLayoutManager){
+                if (recyclerView.getLayoutManager() instanceof StaggeredGridLayoutManager) {
                     StaggeredGridLayoutManager layoutManager = (StaggeredGridLayoutManager) recyclerView.getLayoutManager();
 //                    lastVisibleItem = layoutManager.findLastVisibleItemPosition();
-                }
-                else if (recyclerView.getLayoutManager() instanceof LinearLayoutManager){
+                } else if (recyclerView.getLayoutManager() instanceof LinearLayoutManager) {
                     LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
                     lastVisibleItem = layoutManager.findLastVisibleItemPosition();
                 }

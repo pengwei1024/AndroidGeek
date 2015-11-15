@@ -1,5 +1,6 @@
 package com.apkfuns.androidgank.models;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -43,7 +44,7 @@ public class GankWelfareItem {
         return results;
     }
 
-    public static class ResultsEntity {
+    public static class ResultsEntity implements Serializable {
         private String who;
         private String publishedAt;
         private String desc;
