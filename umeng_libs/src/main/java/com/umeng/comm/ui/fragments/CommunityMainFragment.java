@@ -37,7 +37,6 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.View.OnClickListener;
 
-import com.ningso.umeng_libs.R;
 import com.umeng.comm.core.beans.CommConfig;
 import com.umeng.comm.core.beans.CommUser;
 import com.umeng.comm.core.beans.MessageCount;
@@ -47,6 +46,9 @@ import com.umeng.comm.ui.activities.FindActivity;
 import com.umeng.comm.ui.mvpview.MvpUnReadMsgView;
 import com.umeng.comm.ui.presenter.impl.NullPresenter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 社区首页，包含关注、推荐、话题三个tab的页面，通过ViewPager管理页面之间的切换.
  */
@@ -55,7 +57,8 @@ public class CommunityMainFragment extends BaseFragment<Void, NullPresenter> imp
 
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
-    private String[] mTitles;
+    private List<String> titleList = new ArrayList<>();
+    private List<Fragment> fragmentList = new ArrayList<>();
     /**
      * Feed流页面
      */
@@ -110,25 +113,23 @@ public class CommunityMainFragment extends BaseFragment<Void, NullPresenter> imp
         mTabLayout = (TabLayout) mRootView.findViewById(ResFinder.getId("tabs_layout"));
         mViewPager = (ViewPager) mRootView.findViewById(ResFinder.getId("viewPager"));
         initFragment();
-        setFragment(mMainFeedFragment, mMainFeedFragment, mTopicFragment);
-        setUpWithTabLayout();
+        setupWithViewPager();
         registerInitSuccessBroadcast();
     }
 
-    private void setFragment(BaseFragment... fragment) {
-        setupWithViewPager(fragment);
-    }
 
-    private void setupWithViewPager(BaseFragment[] fragments) {
-        mTitles=getResources().getStringArray(R.array.umeng_comm_feed_titles);
-      //  mTitles = getResources().getStringArray(ResFinder.getResourceId(ResType.ARRAY, "umeng_comm_feed_titles"));
-        CommFragmentPageAdapter mViewPagerAdapter = new CommFragmentPageAdapter(getChildFragmentManager(), mTitles, fragments);
+    private void setupWithViewPager() {
+        titleList.clear();
+        fragmentList.clear();
+        titleList.add("关注");
+        titleList.add("推荐");
+        titleList.add("话题");
+        fragmentList.add(mMainFeedFragment);
+        fragmentList.add(mTopicFragment);
+        fragmentList.add(mRecommendFragment);
+        CommFragmentPageAdapter mViewPagerAdapter = new CommFragmentPageAdapter(getChildFragmentManager(), titleList, fragmentList);
         mViewPager.setAdapter(mViewPagerAdapter);
         mViewPager.setCurrentItem(0);
-    }
-
-
-    private void setUpWithTabLayout() {
         mTabLayout.addTab(mTabLayout.newTab().setText("关注"));
         mTabLayout.addTab(mTabLayout.newTab().setText("推荐"));
         mTabLayout.addTab(mTabLayout.newTab().setText("话题"));
@@ -272,29 +273,31 @@ public class CommunityMainFragment extends BaseFragment<Void, NullPresenter> imp
     //   }
 
     class CommFragmentPageAdapter extends FragmentPagerAdapter {
-        private String[] titles;
-        private Fragment[] fragments;
+        private List<String> titleList = new ArrayList<>();
+        private List<Fragment> fragmentList = new ArrayList<>();
 
-        public CommFragmentPageAdapter(FragmentManager fm, String[] titles, Fragment[] fragments) {
+        public CommFragmentPageAdapter(FragmentManager fm, List<String> stringList, List<Fragment> fragments) {
             super(fm);
-            this.titles = titles;
-            this.fragments = fragments;
+            titleList = stringList;
+            fragmentList.removeAll(fragmentList);
+            fragmentList.addAll(fragments);
         }
 
         @Override
         public Fragment getItem(int position) {
-            return fragments[position];
+            return fragmentList.get(position);
         }
 
         @Override
         public int getCount() {
-            return fragments.length;
+            return fragmentList.size();
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
-            return titles[position];
+            return titleList.get(position);
         }
+
     }
 
     /**
@@ -377,10 +380,11 @@ public class CommunityMainFragment extends BaseFragment<Void, NullPresenter> imp
      * 注册登录成功时的广播</br>
      */
     private void registerInitSuccessBroadcast() {
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(Constants.ACTION_INIT_SUCCESS);
-        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mInitConfigReceiver,
-                filter);
+        if (mInitConfigReceiver != null) {
+            IntentFilter filter = new IntentFilter();
+            filter.addAction(Constants.ACTION_INIT_SUCCESS);
+            LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mInitConfigReceiver, filter);
+        }
     }
 
     private BroadcastReceiver mInitConfigReceiver = new BroadcastReceiver() {
@@ -393,7 +397,9 @@ public class CommunityMainFragment extends BaseFragment<Void, NullPresenter> imp
 
     @Override
     public void onDestroy() {
-        LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(mInitConfigReceiver);
+        if (mInitConfigReceiver != null) {
+            LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(mInitConfigReceiver);
+        }
         super.onDestroy();
     }
 

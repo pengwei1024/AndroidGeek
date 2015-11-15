@@ -33,6 +33,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setCheckedItem(R.id.nav_gank);
         setFragment(GankIoFragment.getInstance());
+        CommunitySDK mCommSDK = CommunityFactory.getCommSDK(this);
+        mCommSDK.initSDK(this);
     }
 
     @Override
@@ -65,8 +67,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     public boolean onNavigationItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.nav_community:
-                CommunitySDK mCommSDK = CommunityFactory.getCommSDK(this);
-                mCommSDK.initSDK(this);
                 CommunityMainFragment mFeedsFragment = new CommunityMainFragment();
                 mFeedsFragment.setBackButtonVisibility(View.INVISIBLE);
                 setFragment(mFeedsFragment);
