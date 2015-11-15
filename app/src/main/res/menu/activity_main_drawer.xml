@@ -13,6 +13,10 @@
             android:icon="@mipmap/ic_launcher"
             android:title="开发者头条" />
         <item
+            android:id="@+id/nav_github_trending"
+            android:icon="@mipmap/ic_launcher"
+            android:title="Github趋势" />
+        <item
             android:id="@+id/nav_community"
             android:icon="@mipmap/ic_launcher"
             android:title="微社区" />
