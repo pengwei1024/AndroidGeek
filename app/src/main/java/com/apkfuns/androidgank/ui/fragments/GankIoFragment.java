@@ -1,5 +1,7 @@
 package com.apkfuns.androidgank.ui.fragments;
 
+import android.graphics.Point;
+import android.graphics.drawable.Animatable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -16,7 +18,12 @@ import com.apkfuns.androidgank.utils.OkHttpClientManager;
 import com.apkfuns.simplerecycleradapter.RVHolder;
 import com.apkfuns.simplerecycleradapter.SimpleRecyclerAdapter;
 import com.bumptech.glide.Glide;
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.controller.BaseControllerListener;
+import com.facebook.drawee.controller.ControllerListener;
+import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.facebook.imagepipeline.image.ImageInfo;
 
 import java.util.List;
 
@@ -90,10 +97,21 @@ public class GankIoFragment extends BaseListFragment {
         }
 
         @Override
-        public void onBindView(final RVHolder holder, int position, int itemViewType, GankWelfareItem.ResultsEntity resultsEntity) {
+        public void onBindView(final RVHolder holder, final int position, int itemViewType, GankWelfareItem.ResultsEntity resultsEntity) {
             holder.setTextView(R.id.time, getDate(resultsEntity.getPublishedAt()));
-            SimpleDraweeView simpleDraweeView = holder.getView(R.id.imageView);
-            simpleDraweeView.setImageURI(Uri.parse(resultsEntity.getUrl()));
+            final SimpleDraweeView simpleDraweeView = holder.getView(R.id.imageView);
+            DraweeController controller = Fresco.newDraweeControllerBuilder()
+                    .setControllerListener(new BaseControllerListener<ImageInfo>() {
+                        @Override
+                        public void onFinalImageSet(String id, ImageInfo imageInfo, Animatable animatable) {
+                            super.onFinalImageSet(id, imageInfo, animatable);
+                            int screenWidth = getActivity().getWindowManager().getDefaultDisplay().getWidth();
+                            simpleDraweeView.getLayoutParams().height =
+                                    imageInfo.getHeight() * screenWidth / (2 * imageInfo.getWidth());
+                        }
+                    })
+                    .setUri(Uri.parse(resultsEntity.getUrl())).build();
+            simpleDraweeView.setController(controller);
         }
 
         @Override
@@ -116,6 +134,14 @@ public class GankIoFragment extends BaseListFragment {
             }
             return "";
         }
+
+        ControllerListener controllerListener = new BaseControllerListener<ImageInfo>() {
+            @Override
+            public void onFinalImageSet(String id, ImageInfo imageInfo, Animatable animatable) {
+                super.onFinalImageSet(id, imageInfo, animatable);
+                toast("" + imageInfo.getHeight());
+            }
+        };
     }
 
 }
