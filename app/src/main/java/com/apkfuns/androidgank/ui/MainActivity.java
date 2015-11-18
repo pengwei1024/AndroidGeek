@@ -75,7 +75,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 setFragment(GankIoFragment.getInstance());
                 break;
             case R.id.nav_github_trending:
-                setFragment(WebBrowserFragment.getInstance("https://github.com/trending?l=java"));
+                setFragment(WebBrowserFragment.getInstance("https://github.com/trending?l=java",
+                        item.getTitle().toString()));
+                break;
+            case R.id.nav_blog:
+                setFragment(CodeBlogFragment.getInstance());
                 break;
             default:
                 break;

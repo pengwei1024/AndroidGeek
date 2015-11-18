@@ -10,8 +10,9 @@
             android:icon="@mipmap/ic_launcher"
             android:title="23coding" />
         <item
+            android:id="@+id/nav_blog"
             android:icon="@mipmap/ic_launcher"
-            android:title="开发者头条" />
+            android:title="技术博客" />
         <item
             android:id="@+id/nav_github_trending"
             android:icon="@mipmap/ic_launcher"

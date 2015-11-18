@@ -1,33 +1,24 @@
 package com.apkfuns.androidgank.ui;
 
 import android.net.Uri;
-import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.widget.NestedScrollView;
 import android.view.View;
-import android.widget.ImageView;
 
 import com.apkfuns.androidgank.R;
 import com.apkfuns.androidgank.app.Global;
 import com.apkfuns.androidgank.models.GankWelfareItem;
-import com.apkfuns.androidgank.ui.base.BaseActivity;
-import com.apkfuns.androidgank.ui.base.BaseFragment;
 import com.apkfuns.androidgank.ui.base.BaseTabActivity;
 import com.apkfuns.androidgank.ui.fragments.GankContentItemFragment;
-import com.apkfuns.androidgank.ui.fragments.GankIoFragment;
 import com.apkfuns.androidgank.utils.JsonHelper;
-import com.bumptech.glide.Glide;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.reflect.TypeToken;
-import com.umeng.comm.ui.dialogs.ImageBrowser;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * Created by pengwei08 on 15/11/15.
@@ -77,6 +68,7 @@ public class GankIoContent extends BaseTabActivity implements View.OnClickListen
                         addTitleAndFragment(categoryName, GankContentItemFragment.getInstance(lists));
                     }
                     tabShow();
+
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
