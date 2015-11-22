@@ -8,11 +8,11 @@
             android:title="干货集中营" />
         <item
             android:icon="@mipmap/ic_launcher"
-            android:title="源码下载" />
+            android:title="源码赏析" />
         <item
             android:id="@+id/nav_blog"
             android:icon="@mipmap/ic_launcher"
-            android:title="技术博客" />
+            android:title="技术博文" />
         <item
             android:id="@+id/nav_github_trending"
             android:icon="@mipmap/ic_launcher"

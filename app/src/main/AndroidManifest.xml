@@ -56,6 +56,11 @@
             android:screenOrientation="portrait"
             android:hardwareAccelerated="true" />
 
+        <activity android:name=".ui.PhotoPreview"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
+             />
+
         <!--Umeng start-->
         <!-- feed主页面 -->
         <activity

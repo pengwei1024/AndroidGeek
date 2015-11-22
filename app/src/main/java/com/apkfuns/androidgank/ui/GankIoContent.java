@@ -47,6 +47,7 @@ public class GankIoContent extends BaseTabActivity implements View.OnClickListen
         imageUrl = getIntent().getStringExtra("imageUrl");
         SimpleDraweeView simpleDraweeView = findView(R.id.backdrop);
         simpleDraweeView.setImageURI(Uri.parse(imageUrl));
+        simpleDraweeView.setOnClickListener(this);
         CollapsingToolbarLayout collapsingToolbar = findView(R.id.collapsing_toolbar);
         collapsingToolbar.setTitle(date);
     }
@@ -79,6 +80,6 @@ public class GankIoContent extends BaseTabActivity implements View.OnClickListen
 
     @Override
     public void onClick(View v) {
-
+        PhotoPreview.showPreview(this, v, imageUrl);
     }
 }
