@@ -1,11 +1,9 @@
 package com.apkfuns.androidgank.ui.fragments;
 
-import android.graphics.Point;
 import android.graphics.drawable.Animatable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Log;
 import android.view.View;
 
 import com.apkfuns.androidgank.R;
@@ -14,10 +12,8 @@ import com.apkfuns.androidgank.models.GankWelfareItem;
 import com.apkfuns.androidgank.ui.GankIoContent;
 import com.apkfuns.androidgank.ui.base.BaseListFragment;
 import com.apkfuns.androidgank.utils.JsonHelper;
-import com.apkfuns.androidgank.utils.OkHttpClientManager;
 import com.apkfuns.simplerecycleradapter.RVHolder;
 import com.apkfuns.simplerecycleradapter.SimpleRecyclerAdapter;
-import com.bumptech.glide.Glide;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.controller.BaseControllerListener;
 import com.facebook.drawee.controller.ControllerListener;
@@ -34,13 +30,9 @@ public class GankIoFragment extends BaseListFragment {
 
     private int page;
     private GankAdapter adapter;
-    private static GankIoFragment fragment;
 
     public static GankIoFragment getInstance() {
-        if (fragment == null) {
-            fragment = new GankIoFragment();
-        }
-        return fragment;
+        return new GankIoFragment();
     }
 
     @Override

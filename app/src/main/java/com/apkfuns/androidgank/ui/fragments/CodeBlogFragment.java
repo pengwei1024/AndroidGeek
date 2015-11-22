@@ -1,9 +1,6 @@
-package com.apkfuns.androidgank.ui;
+package com.apkfuns.androidgank.ui.fragments;
 
-import com.apkfuns.androidgank.ui.base.BaseFragment;
-import com.apkfuns.androidgank.ui.base.BaseTabActivity;
 import com.apkfuns.androidgank.ui.base.BaseTabFragment;
-import com.apkfuns.androidgank.ui.fragments.ArticleFragment;
 
 /**
  * Created by pengwei08 on 15/11/16.
@@ -18,8 +15,8 @@ public class CodeBlogFragment extends BaseTabFragment {
     protected void initTab() {
         setTitle("技术博客");
         addTitleAndFragment("技术博文", ArticleFragment.getInstance());
-        addTitleAndFragment("大牛博主", ArticleFragment.getInstance());
-        addTitleAndFragment("开源社区", ArticleFragment.getInstance());
+        addTitleAndFragment("大牛博主", CodeAuthorFragment.getInstance("1"));
+        addTitleAndFragment("开源社区", CodeAuthorFragment.getInstance("2"));
         tabShow();
     }
 }

@@ -11,6 +11,7 @@ import android.view.View;
 
 import com.apkfuns.androidgank.R;
 import com.apkfuns.androidgank.ui.base.BaseActivity;
+import com.apkfuns.androidgank.ui.fragments.CodeBlogFragment;
 import com.apkfuns.androidgank.ui.fragments.GankIoFragment;
 import com.apkfuns.androidgank.ui.fragments.WebBrowserFragment;
 import com.umeng.comm.core.CommunitySDK;

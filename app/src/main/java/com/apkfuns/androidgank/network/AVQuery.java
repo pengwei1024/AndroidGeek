@@ -1,6 +1,7 @@
 package com.apkfuns.androidgank.network;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.apkfuns.androidgank.app.Global;
 import com.apkfuns.androidgank.utils.EncodeUtil;
@@ -13,6 +14,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,6 +64,7 @@ public class AVQuery {
 
             @Override
             public void onResponse(String string) {
+                Log.d("abc", string);
                 List<T> list = new ArrayList<>();
                 try {
                     JSONArray jsonArray = new JSONObject(string).getJSONArray("results");
@@ -91,11 +95,28 @@ public class AVQuery {
         if (!TextUtils.isEmpty(lastTime)) {
             param += "&&where={\"createdAt\":{\"$lt\":{\"__type\":\"Date\",\"iso\":\"" + lastTime + "\"}}}";
         }
-        AVGet("Articles", param, AVObject.class, callBack);
+        AVGet("Articles", param, ArticleObject.class, callBack);
+    }
+
+    /**
+     * 获取博主
+     *
+     * @param callBack
+     * @param type
+     */
+    public static void GetBlog(String type, AvCallBack callBack) {
+        String param = "";
+        try {
+            param = "?where=" + URLEncoder.encode("{\"type\":\"" + type + "\"}", "UTF-8") + "&&order=-createAt";
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        AVGet("Blogs", param, BlogObject.class, callBack);
     }
 
     /**
      * AV请求回调方法
+     *
      * @param <T>
      */
     public interface AvCallBack<T> {

@@ -50,9 +50,11 @@
         <activity android:name=".ui.GankIoContent"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"/>
+
         <activity android:name=".ui.WebBrowser"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:hardwareAccelerated="true" />
 
         <!--Umeng start-->
         <!-- feed主页面 -->

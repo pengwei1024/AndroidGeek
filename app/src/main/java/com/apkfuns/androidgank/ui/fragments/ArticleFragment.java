@@ -28,6 +28,23 @@ public class ArticleFragment extends BaseListFragment {
         getData(null);
     }
 
+    @Override
+    public void onLoadMore() {
+        if (notNull(getAdapter()) && getAdapter().getList().size() > 0) {
+            ArticleObject articleObject = (ArticleObject) getAdapter().getList()
+                    .get(getAdapter().getList().size() - 1);
+            getData(articleObject.getCreatedAt());
+        }
+    }
+
+    @Override
+    public void onRefresh() {
+        if (notNull(getAdapter())) {
+            getAdapter().clear();
+        }
+        getData(null);
+    }
+
     private void getData(String lastTime) {
         AVQuery.GetArticle(new AVQuery.AvCallBack<ArticleObject>() {
             @Override
@@ -50,6 +67,7 @@ public class ArticleFragment extends BaseListFragment {
                         });
                     }
                 }
+                setRefreshing(false);
             }
         }, lastTime);
     }
