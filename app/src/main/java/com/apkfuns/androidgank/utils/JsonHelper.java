@@ -3,6 +3,8 @@ package com.apkfuns.androidgank.utils;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
+import java.util.List;
+
 /**
  * Created by pengwei08 on 2015/7/31.
  * gson帮助类

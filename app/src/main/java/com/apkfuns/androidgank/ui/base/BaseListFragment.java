@@ -10,8 +10,10 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SimpleAdapter;
 
 import com.apkfuns.androidgank.R;
+import com.apkfuns.simplerecycleradapter.SimpleRecyclerAdapter;
 
 /**
  * Created by pengwei08 on 15/11/14.
@@ -69,6 +71,13 @@ public class BaseListFragment extends BaseFragment implements SwipeRefreshLayout
         if (notNull(mRecyclerView) && notNull(adapter)) {
             mRecyclerView.setAdapter(adapter);
         }
+    }
+
+    protected SimpleRecyclerAdapter getAdapter() {
+        if (notNull(mRecyclerView) && notNull(mRecyclerView.getAdapter())) {
+            return (SimpleRecyclerAdapter) mRecyclerView.getAdapter();
+        }
+        return null;
     }
 
     /**

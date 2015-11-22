@@ -8,7 +8,7 @@
             android:title="干货集中营" />
         <item
             android:icon="@mipmap/ic_launcher"
-            android:title="23coding" />
+            android:title="源码下载" />
         <item
             android:id="@+id/nav_blog"
             android:icon="@mipmap/ic_launcher"
