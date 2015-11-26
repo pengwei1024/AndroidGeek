@@ -8,6 +8,7 @@ import android.view.View;
 import com.apkfuns.androidgank.R;
 import com.apkfuns.androidgank.app.Global;
 import com.apkfuns.androidgank.models.GankWelfareItem;
+import com.apkfuns.androidgank.ui.base.BaseFragment;
 import com.apkfuns.androidgank.ui.base.BaseTabActivity;
 import com.apkfuns.androidgank.ui.fragments.GankContentItemFragment;
 import com.apkfuns.androidgank.utils.JsonHelper;

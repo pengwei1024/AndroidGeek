@@ -123,4 +123,8 @@ public abstract class BaseTabActivity extends BaseActivity {
             tabLayout.setTabMode(TabLayout.MODE_FIXED);
         }
     }
+
+    public ViewPager getViewPager() {
+        return viewPager;
+    }
 }
