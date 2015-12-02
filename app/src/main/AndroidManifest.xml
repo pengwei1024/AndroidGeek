@@ -47,7 +47,10 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.GankIoContent"
+        <activity android:name=".ui.GankContent"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.GankContent2"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"/>
 

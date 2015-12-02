@@ -9,6 +9,7 @@ import android.view.MotionEvent;
  * Created by pengwei on 15/11/26.
  */
 public class ViewPagerExtend extends ViewPager {
+
     public ViewPagerExtend(Context context) {
         super(context);
     }
@@ -19,6 +20,11 @@ public class ViewPagerExtend extends ViewPager {
 
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
+        return true;
+    }
+
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
         return true;
     }
 }

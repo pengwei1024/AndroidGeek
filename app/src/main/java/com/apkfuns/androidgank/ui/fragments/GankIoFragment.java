@@ -3,13 +3,15 @@ package com.apkfuns.androidgank.ui.fragments;
 import android.graphics.drawable.Animatable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 
 import com.apkfuns.androidgank.R;
 import com.apkfuns.androidgank.app.Global;
 import com.apkfuns.androidgank.models.GankWelfareItem;
-import com.apkfuns.androidgank.ui.GankIoContent;
+import com.apkfuns.androidgank.ui.GankContent;
+import com.apkfuns.androidgank.ui.GankContent2;
 import com.apkfuns.androidgank.ui.base.BaseListFragment;
 import com.apkfuns.androidgank.utils.JsonHelper;
 import com.apkfuns.simplerecycleradapter.RVHolder;
@@ -39,8 +41,9 @@ public class GankIoFragment extends BaseListFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setTitle("干货集中营");
-        getRecyclerView().setLayoutManager(new StaggeredGridLayoutManager(2,
-                StaggeredGridLayoutManager.VERTICAL));
+//        getRecyclerView().setLayoutManager(new StaggeredGridLayoutManager(2,
+//                StaggeredGridLayoutManager.VERTICAL));
+        getRecyclerView().setLayoutManager(new GridLayoutManager(getActivity(), 2));
         onRefresh();
     }
 
@@ -112,7 +115,7 @@ public class GankIoFragment extends BaseListFragment {
             Bundle bundle = new Bundle();
             bundle.putString("date", getDate(item.getPublishedAt()));
             bundle.putString("imageUrl", item.getUrl());
-            holder.startActivity(GankIoContent.class, bundle);
+            holder.startActivity(GankContent.class, bundle);
         }
 
         /**

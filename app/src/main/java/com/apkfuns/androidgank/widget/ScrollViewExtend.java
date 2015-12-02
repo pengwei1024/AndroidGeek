@@ -11,42 +11,26 @@ import android.view.View;
  * Created by pengwei on 15/11/26.
  */
 public class ScrollViewExtend extends NestedScrollView {
+
     public ScrollViewExtend(Context context) {
-        this(context, null);
+        super(context);
     }
 
     public ScrollViewExtend(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
+        super(context, attrs);
     }
 
     public ScrollViewExtend(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        canScroll = true;
     }
 
-    private boolean canScroll;
-
-    private GestureDetector mGestureDetector;
-    View.OnTouchListener mGestureListener;
+    @Override
+    public boolean onTouchEvent(MotionEvent ev) {
+        return true;
+    }
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
-        if(ev.getAction() == MotionEvent.ACTION_UP)
-            canScroll = true;
-        return super.onInterceptTouchEvent(ev) && mGestureDetector.onTouchEvent(ev);
+        return true;
     }
-
-    class YScrollDetector extends GestureDetector.SimpleOnGestureListener {
-        @Override
-        public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-            if(canScroll)
-                if (Math.abs(distanceY) >= Math.abs(distanceX))
-                    canScroll = true;
-                else
-                    canScroll = false;
-            return canScroll;
-        }
-    }
-
-
 }

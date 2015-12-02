@@ -38,13 +38,20 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         mCommSDK.initSDK(this);
     }
 
+    private long mExitTime;
+
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            if ((System.currentTimeMillis() - mExitTime) > 2000) {
+                toast("再按一次退出%s", getString(R.string.app_name));
+                mExitTime = System.currentTimeMillis();
+            } else {
+                finish();
+            }
         }
     }
 

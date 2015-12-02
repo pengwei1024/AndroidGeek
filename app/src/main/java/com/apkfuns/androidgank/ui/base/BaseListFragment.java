@@ -41,10 +41,12 @@ public class BaseListFragment extends BaseFragment implements SwipeRefreshLayout
 
     private void ensureView() {
         mSwipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeRefreshLayout);
-        if (onRefreshEnable()) {
-            mSwipeRefreshLayout.setOnRefreshListener(this);
-        } else {
-            mSwipeRefreshLayout.setEnabled(false);
+        if (notNull(mSwipeRefreshLayout)) {
+            if (onRefreshEnable()) {
+                mSwipeRefreshLayout.setOnRefreshListener(this);
+            } else {
+                mSwipeRefreshLayout.setEnabled(false);
+            }
         }
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));

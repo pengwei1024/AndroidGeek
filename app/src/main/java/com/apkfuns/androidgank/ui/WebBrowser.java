@@ -4,8 +4,11 @@ package com.apkfuns.androidgank.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.webkit.JavascriptInterface;
 
+import com.apkfuns.androidgank.R;
 import com.apkfuns.androidgank.app.App;
 import com.apkfuns.androidgank.ui.base.BaseWebActivity;
 
@@ -35,6 +38,12 @@ public class WebBrowser extends BaseWebActivity {
     public void onReceivedError(int errorCode, String description, String failingUrl) {
         tempUrl = failingUrl;
         loadUrlFromAsset("html/error.html");
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        new MenuInflater(this).inflate(R.menu.web_browser_menu, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     /**

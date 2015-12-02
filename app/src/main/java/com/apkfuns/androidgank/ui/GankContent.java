@@ -3,6 +3,7 @@ package com.apkfuns.androidgank.ui;
 import android.net.Uri;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.widget.NestedScrollView;
+import android.view.MotionEvent;
 import android.view.View;
 
 import com.apkfuns.androidgank.R;
@@ -10,7 +11,9 @@ import com.apkfuns.androidgank.app.Global;
 import com.apkfuns.androidgank.models.GankWelfareItem;
 import com.apkfuns.androidgank.ui.base.BaseFragment;
 import com.apkfuns.androidgank.ui.base.BaseTabActivity;
+import com.apkfuns.androidgank.ui.fragments.GankContentArticleFragment;
 import com.apkfuns.androidgank.ui.fragments.GankContentItemFragment;
+import com.apkfuns.androidgank.ui.fragments.TestFragment;
 import com.apkfuns.androidgank.utils.JsonHelper;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.reflect.TypeToken;
@@ -24,7 +27,7 @@ import java.util.ArrayList;
 /**
  * Created by pengwei08 on 15/11/15.
  */
-public class GankIoContent extends BaseTabActivity implements View.OnClickListener {
+public class GankContent extends BaseTabActivity implements View.OnClickListener {
 
     private String date;
     private String imageUrl;
@@ -67,7 +70,8 @@ public class GankIoContent extends BaseTabActivity implements View.OnClickListen
                                 JsonHelper.getInstance().fromJson(results.getString(categoryName),
                                         new TypeToken<ArrayList<GankWelfareItem.ResultsEntity>>() {
                                         }.getType());
-                        addTitleAndFragment(categoryName, GankContentItemFragment.getInstance(lists));
+                        addTitleAndFragment(categoryName, GankContentArticleFragment.getInstance(lists));
+//                        addTitleAndFragment(categoryName, new TestFragment());
                     }
                     tabShow();
 
