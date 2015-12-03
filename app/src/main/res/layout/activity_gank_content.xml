@@ -24,7 +24,8 @@
                 android:id="@+id/backdrop"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
-                android:scaleType="centerCrop"
+                android:scaleType="fitStart"
+                app:actualImageScaleType="focusCrop"
                 android:transitionName="mu"
                 app:layout_collapseMode="parallax"
                 app:layout_collapseParallaxMultiplier="0.7"/>

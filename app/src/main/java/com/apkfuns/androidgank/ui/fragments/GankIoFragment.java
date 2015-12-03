@@ -41,9 +41,9 @@ public class GankIoFragment extends BaseListFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setTitle("干货集中营");
-//        getRecyclerView().setLayoutManager(new StaggeredGridLayoutManager(2,
-//                StaggeredGridLayoutManager.VERTICAL));
-        getRecyclerView().setLayoutManager(new GridLayoutManager(getActivity(), 2));
+        getRecyclerView().setLayoutManager(new StaggeredGridLayoutManager(2,
+                StaggeredGridLayoutManager.VERTICAL));
+//        getRecyclerView().setLayoutManager(new GridLayoutManager(getActivity(), 2));
         onRefresh();
     }
 

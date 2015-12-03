@@ -1,5 +1,7 @@
 package com.apkfuns.androidgank.ui.base;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -127,7 +129,7 @@ public class BaseActivity extends AppCompatActivity implements BaseFunc {
 
     @Override
     public View inflateView(int layoutId) {
-        return LayoutInflater.from(this).inflate(layoutId,null, false);
+        return LayoutInflater.from(this).inflate(layoutId, null, false);
     }
 
     public <T extends View> T findView(int viewId) {
@@ -174,5 +176,19 @@ public class BaseActivity extends AppCompatActivity implements BaseFunc {
     @Override
     public String syncGet(String url, int requestCode, String... args) {
         return null;
+    }
+
+    @Override
+    public void startActivity(Class cla) {
+        startActivity(cla, null);
+    }
+
+    @Override
+    public void startActivity(Class cla, Bundle bundle) {
+        Intent it = new Intent(this, cla);
+        if (notNull(bundle)) {
+            it.putExtras(bundle);
+        }
+        startActivity(it);
     }
 }

@@ -1,6 +1,8 @@
 package com.apkfuns.androidgank.ui.base;
 
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -89,6 +91,18 @@ public class BaseFragment extends Fragment implements BaseFunc {
             }
         }
         return null;
+    }
+
+    @Override
+    public void startActivity(Class cla) {
+        startActivity(cla);
+    }
+
+    @Override
+    public void startActivity(Class cla, Bundle bundle) {
+        Intent it = new Intent(getActivity(), cla);
+        it.putExtras(bundle);
+        startActivity(it);
     }
 
 }

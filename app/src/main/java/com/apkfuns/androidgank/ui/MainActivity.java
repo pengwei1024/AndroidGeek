@@ -13,6 +13,7 @@ import com.apkfuns.androidgank.R;
 import com.apkfuns.androidgank.ui.base.BaseActivity;
 import com.apkfuns.androidgank.ui.fragments.CodeBlogFragment;
 import com.apkfuns.androidgank.ui.fragments.GankIoFragment;
+import com.apkfuns.androidgank.ui.fragments.GitHubFragment;
 import com.apkfuns.androidgank.ui.fragments.WebBrowserFragment;
 import com.umeng.comm.core.CommunitySDK;
 import com.umeng.comm.core.impl.CommunityFactory;
@@ -88,6 +89,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 break;
             case R.id.nav_blog:
                 setFragment(CodeBlogFragment.getInstance());
+                break;
+            case R.id.nav_source:
+                setFragment(new GitHubFragment());
                 break;
             default:
                 break;

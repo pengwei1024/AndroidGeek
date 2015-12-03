@@ -34,4 +34,6 @@ dependencies {
     compile 'com.facebook.fresco:imagepipeline-okhttp:0.8.0+'
     compile project(':umeng_libs')
     compile files('libs/okhttputils.jar')
+    compile files('libs/jsoup-1.8.3.jar')
+    compile 'com.apkfuns.logutils:library:1.0.6'
 }

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:title="搜索" android:orderInCategory="1"  android:icon="@mipmap/icon_search_ba" app:showAsAction="always"/>
+    <group>
+        <item android:title="today"></item>
+        <item android:title="this week"></item>
+        <item android:title="this month"></item>
+    </group>
+</menu>

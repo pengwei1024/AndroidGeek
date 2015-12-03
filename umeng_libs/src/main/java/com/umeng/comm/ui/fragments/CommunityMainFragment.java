@@ -122,8 +122,8 @@ public class CommunityMainFragment extends BaseFragment<Void, NullPresenter> imp
         titleList.clear();
         fragmentList.clear();
         titleList.add("关注");
-        titleList.add("推荐");
         titleList.add("话题");
+        titleList.add("推荐");
         fragmentList.add(mMainFeedFragment);
         fragmentList.add(mTopicFragment);
         fragmentList.add(mRecommendFragment);
@@ -131,8 +131,8 @@ public class CommunityMainFragment extends BaseFragment<Void, NullPresenter> imp
         mViewPager.setAdapter(mViewPagerAdapter);
         mViewPager.setCurrentItem(0);
         mTabLayout.addTab(mTabLayout.newTab().setText("关注"));
-        mTabLayout.addTab(mTabLayout.newTab().setText("推荐"));
         mTabLayout.addTab(mTabLayout.newTab().setText("话题"));
+        mTabLayout.addTab(mTabLayout.newTab().setText("推荐"));
         mTabLayout.setupWithViewPager(mViewPager);
     }
 

@@ -8,4 +8,6 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="msg_network_unreachable">网络无法访问</string>
+
+    <string name="phone_user_agent">Mozilla/5.0 (iPhone; CPU iPhone OS 7_0 like Mac OS X; en-us) AppleWebKit/537.51.1 (KHTML, like Gecko) Version/7.0 Mobile/11A465 Safari/9537.53</string>
 </resources>

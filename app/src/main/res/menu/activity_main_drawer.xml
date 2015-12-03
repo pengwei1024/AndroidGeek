@@ -7,6 +7,7 @@
             android:icon="@mipmap/ic_launcher"
             android:title="干货集中营" />
         <item
+            android:id="@+id/nav_source"
             android:icon="@mipmap/ic_launcher"
             android:title="源码赏析" />
         <item

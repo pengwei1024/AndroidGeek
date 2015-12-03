@@ -1,5 +1,6 @@
 package com.apkfuns.androidgank.ui.base;
 
+import android.os.Bundle;
 import android.view.View;
 
 import com.squareup.okhttp.Callback;
@@ -51,6 +52,7 @@ interface BaseFunc {
 
     /**
      * 异步请求
+     *
      * @param url
      * @param requestCode
      * @param args
@@ -59,10 +61,20 @@ interface BaseFunc {
 
     /**
      * 同步请求，需要自己回调onRequestCallBack()方法
+     *
      * @param url
      * @param requestCode
      * @param args
      * @return
      */
     String syncGet(String url, int requestCode, String... args);
+
+    /**
+     * 启动activity
+     * @param cla
+     */
+    void startActivity(Class cla);
+
+    void startActivity(Class cla, Bundle bundle);
+
 }
