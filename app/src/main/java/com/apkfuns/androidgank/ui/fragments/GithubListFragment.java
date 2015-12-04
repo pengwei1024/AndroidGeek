@@ -1,5 +1,6 @@
 package com.apkfuns.androidgank.ui.fragments;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -7,10 +8,12 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.apkfuns.androidgank.R;
+import com.apkfuns.androidgank.ui.WebBrowser;
 import com.apkfuns.androidgank.ui.base.BaseListFragment;
 import com.apkfuns.logutils.LogUtils;
 import com.apkfuns.simplerecycleradapter.RVHolder;
 import com.apkfuns.simplerecycleradapter.SimpleRecyclerAdapter;
+import com.facebook.drawee.view.SimpleDraweeView;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -66,6 +69,23 @@ public class GitHubListFragment extends BaseListFragment {
                     @Override
                     public void onBindView(RVHolder holder, int position, int itemViewType, Element element) {
                         holder.setTextView(R.id.title, element.getElementsByClass("list-item-title").get(0).html());
+                        holder.setTextView(R.id.description, element.getElementsByClass("repo-description").get(0).html());
+                        String avatar = element.getElementsByClass("avatar").get(0).attr("src");
+                        if (avatar.endsWith("&s=40")) {
+                            avatar = avatar.substring(0, avatar.length() - 5);
+                        }
+                        SimpleDraweeView avatarView = holder.getView(R.id.imageView);
+                        avatarView.setImageURI(Uri.parse(avatar));
+                        String starNum = element.getElementsByClass("meta").get(0).html();
+                        starNum = starNum.substring(0, starNum.indexOf("<span class"));
+                        holder.setTextView(R.id.starNum, starNum);
+                    }
+
+                    @Override
+                    public void onItemClick(RVHolder holder, View view, int position, Element element) {
+                        if (notNull(element) && notNull(element.child(0))){
+                            WebBrowser.openUrl("https://www.github.com" + element.child(0).attr("href"));
+                        }
                     }
                 });
             } else if (url.equals("https://github.com/trending/developers?l=java")) {
@@ -79,7 +99,6 @@ public class GitHubListFragment extends BaseListFragment {
             }
         }
     };
-
 
 
     @Override

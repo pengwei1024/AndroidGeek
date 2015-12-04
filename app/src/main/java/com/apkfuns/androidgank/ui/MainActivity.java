@@ -3,6 +3,8 @@ package com.apkfuns.androidgank.ui;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.util.ArrayMap;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -15,9 +17,12 @@ import com.apkfuns.androidgank.ui.fragments.CodeBlogFragment;
 import com.apkfuns.androidgank.ui.fragments.GankIoFragment;
 import com.apkfuns.androidgank.ui.fragments.GitHubFragment;
 import com.apkfuns.androidgank.ui.fragments.WebBrowserFragment;
+import com.apkfuns.logutils.LogUtils;
 import com.umeng.comm.core.CommunitySDK;
 import com.umeng.comm.core.impl.CommunityFactory;
 import com.umeng.comm.ui.fragments.CommunityMainFragment;
+
+import java.util.Map;
 
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -56,15 +61,28 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         }
     }
 
+    // 当前显示的fragment
+    private Fragment currentFragment;
+
     /**
      * 切换默认视图
      *
      * @param fragment
      */
     private void setFragment(Fragment fragment) {
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container, fragment)
-                .commit();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        if (notNull(currentFragment)) {
+            if (!fragment.equals(currentFragment)) {
+                if (!fragment.isAdded()) {
+                    transaction.hide(currentFragment).add(R.id.container, fragment).commit();
+                } else {
+                    transaction.hide(currentFragment).show(fragment).commit();
+                }
+            }
+        } else {
+            transaction.add(R.id.container, fragment).commit();
+        }
+        currentFragment = fragment;
     }
 
     @Override
@@ -72,12 +90,16 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         return false;
     }
 
+    private CommunityMainFragment mFeedsFragment;
+
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.nav_community:
-                CommunityMainFragment mFeedsFragment = new CommunityMainFragment();
-                mFeedsFragment.setBackButtonVisibility(View.INVISIBLE);
+                if (!notNull(mFeedsFragment)) {
+                    mFeedsFragment = new CommunityMainFragment();
+                    mFeedsFragment.setBackButtonVisibility(View.INVISIBLE);
+                }
                 setFragment(mFeedsFragment);
                 break;
             case R.id.nav_gank:
@@ -91,7 +113,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 setFragment(CodeBlogFragment.getInstance());
                 break;
             case R.id.nav_source:
-                setFragment(new GitHubFragment());
+                setFragment(GitHubFragment.getInstance());
                 break;
             default:
                 break;

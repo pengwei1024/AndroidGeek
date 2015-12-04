@@ -33,8 +33,10 @@ public class GankIoFragment extends BaseListFragment {
     private int page;
     private GankAdapter adapter;
 
+    private static GankIoFragment singleton;
+
     public static GankIoFragment getInstance() {
-        return new GankIoFragment();
+        return singleton == null ? singleton = new GankIoFragment() : singleton;
     }
 
     @Override

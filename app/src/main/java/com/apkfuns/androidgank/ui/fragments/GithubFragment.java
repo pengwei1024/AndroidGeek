@@ -24,6 +24,12 @@ import java.io.IOException;
  */
 public class GitHubFragment extends BaseTabFragment {
 
+    private static GitHubFragment singleton;
+
+    public static GitHubFragment getInstance() {
+        return singleton == null ? singleton = new GitHubFragment() : singleton;
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

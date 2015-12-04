@@ -7,8 +7,10 @@ import com.apkfuns.androidgank.ui.base.BaseTabFragment;
  */
 public class CodeBlogFragment extends BaseTabFragment {
 
+    private static CodeBlogFragment singleton;
+
     public static CodeBlogFragment getInstance() {
-        return new CodeBlogFragment();
+        return singleton == null ? singleton = new CodeBlogFragment() : singleton;
     }
 
     @Override
