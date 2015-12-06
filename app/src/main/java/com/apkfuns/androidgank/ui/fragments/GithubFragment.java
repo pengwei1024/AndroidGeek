@@ -2,22 +2,13 @@ package com.apkfuns.androidgank.ui.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.apkfuns.androidgank.R;
-import com.apkfuns.androidgank.ui.base.BaseFragment;
 import com.apkfuns.androidgank.ui.base.BaseTabFragment;
-import com.apkfuns.logutils.LogUtils;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
 
-import java.io.IOException;
 
 /**
  * Created by pengwei on 15/12/3.

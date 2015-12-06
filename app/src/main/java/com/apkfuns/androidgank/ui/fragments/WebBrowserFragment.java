@@ -34,6 +34,13 @@ public class WebBrowserFragment extends BaseFragment {
         return fragment;
     }
 
+    private static WebBrowserFragment singleton;
+
+    public static WebBrowserFragment getSingleInstance(String url, String title) {
+        return singleton == null ? singleton = getInstance(url, title) : singleton;
+
+    }
+
     private ProgressBar pb;
     private WebView webView;
 

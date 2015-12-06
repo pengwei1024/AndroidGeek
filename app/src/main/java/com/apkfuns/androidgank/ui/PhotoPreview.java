@@ -6,7 +6,9 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.view.ViewCompat;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 
 import com.apkfuns.androidgank.R;
@@ -27,6 +29,7 @@ public class PhotoPreview extends BaseActivity {
     public static final String TRANSIT_PIC = "picture";
     public String imageUrl;
     private PhotoViewAttacher attacher;
+    private AlertDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +43,30 @@ public class PhotoPreview extends BaseActivity {
             @Override
             public void onPhotoTap(View view, float x, float y) {
                 onBackPressed();
+            }
+        });
+
+        attacher.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                dialog = showMenu(new String[]{"保存", "取消"},
+                        new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                switch (position) {
+                                    case 0:
+                                        break;
+                                    case 1:
+                                        break;
+                                    default:
+                                        break;
+                                }
+                                if (notNull(dialog)) {
+                                    dialog.dismiss();
+                                }
+                            }
+                        });
+                return true;
             }
         });
         Glide.with(this).load(imageUrl).into(new SimpleTarget<GlideDrawable>() {

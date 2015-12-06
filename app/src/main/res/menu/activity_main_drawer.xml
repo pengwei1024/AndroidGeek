@@ -7,10 +7,6 @@
             android:icon="@mipmap/ic_launcher"
             android:title="干货集中营" />
         <item
-            android:id="@+id/nav_source"
-            android:icon="@mipmap/ic_launcher"
-            android:title="源码赏析" />
-        <item
             android:id="@+id/nav_blog"
             android:icon="@mipmap/ic_launcher"
             android:title="技术博文" />
@@ -19,12 +15,16 @@
             android:icon="@mipmap/ic_launcher"
             android:title="Github趋势" />
         <item
+            android:id="@+id/nav_source"
+            android:icon="@mipmap/ic_launcher"
+            android:title="源码赏析" />
+        <item
             android:id="@+id/nav_community"
             android:icon="@mipmap/ic_launcher"
             android:title="微社区" />
     </group>
 
-    <item android:title="Communicate">
+    <item android:title="设置">
         <menu>
             <item
                 android:id="@+id/nav_share"

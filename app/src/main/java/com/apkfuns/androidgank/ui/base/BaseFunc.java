@@ -1,7 +1,9 @@
 package com.apkfuns.androidgank.ui.base;
 
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
+import android.widget.AdapterView;
 
 import com.squareup.okhttp.Callback;
 
@@ -71,10 +73,19 @@ interface BaseFunc {
 
     /**
      * 启动activity
+     *
      * @param cla
      */
     void startActivity(Class cla);
 
     void startActivity(Class cla, Bundle bundle);
+
+    /**
+     * 显示菜单
+     *
+     * @param menus
+     * @param listener
+     */
+    AlertDialog showMenu(String[] menus, AdapterView.OnItemClickListener listener);
 
 }

@@ -11,7 +11,8 @@
         android:layout_height="40dp"
         app:tabGravity="fill"
         app:tabIndicatorColor="#39AFF7"
-        app:tabSelectedTextColor="#39AFF7" />
+        app:tabSelectedTextColor="#39AFF7"
+        android:textAllCaps="false"/>
 
     <View
         android:layout_width="match_parent"
