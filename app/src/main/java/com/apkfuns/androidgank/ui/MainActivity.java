@@ -10,6 +10,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewDebug;
 
 import com.apkfuns.androidgank.R;
 import com.apkfuns.androidgank.ui.base.BaseActivity;
@@ -117,6 +118,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 break;
             default:
                 break;
+        }
+        if (notEmpty(item.getTitle().toString())) {
+            setTitle(item.getTitle());
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

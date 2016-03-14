@@ -46,7 +46,7 @@ public class BaseActivity extends AppCompatActivity implements BaseFunc {
             } else {
                 LinearLayout parent = new LinearLayout(this);
                 parent.setOrientation(LinearLayout.VERTICAL);
-                View toolBarView = inflateView(R.layout.view_toolbar);
+                View toolBarView = inflateView(this, R.layout.view_toolbar);
                 parent.addView(toolBarView, LayoutParamsHelper.getLinearLayoutParamWrap());
                 parent.addView(view, LayoutParamsHelper.getLinearLayoutParamMatch());
                 super.setContentView(parent);
@@ -135,6 +135,10 @@ public class BaseActivity extends AppCompatActivity implements BaseFunc {
     @Override
     public View inflateView(int layoutId) {
         return LayoutInflater.from(this).inflate(layoutId, null, false);
+    }
+
+    public View inflateView(Context context, int layoutId) {
+        return LayoutInflater.from(context).inflate(layoutId, null, false);
     }
 
     public <T extends View> T findView(int viewId) {
