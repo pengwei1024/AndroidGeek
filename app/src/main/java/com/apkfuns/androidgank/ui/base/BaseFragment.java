@@ -4,6 +4,8 @@ package com.apkfuns.androidgank.ui.base;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.app.Activity;
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
@@ -19,12 +21,18 @@ import com.apkfuns.androidgank.utils.NetUtil;
 import com.apkfuns.androidgank.utils.OkHttpClientManager;
 import com.squareup.okhttp.Request;
 
-import java.io.IOException;
-
 /**
  * Created by pengwei08 on 15/11/14.
  */
 public class BaseFragment extends Fragment implements BaseFunc {
+
+    protected Context mContext;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mContext = context;
+    }
 
     @Override
     public boolean notNull(Object object) {
@@ -38,22 +46,22 @@ public class BaseFragment extends Fragment implements BaseFunc {
 
     @Override
     public void toast(String msg, Object... args) {
-        Toast.makeText(getActivity(), String.format(msg, args), Toast.LENGTH_LONG).show();
+        Toast.makeText(mContext, String.format(msg, args), Toast.LENGTH_LONG).show();
     }
 
     @Override
     public View inflateView(int layoutId) {
-        return LayoutInflater.from(getActivity()).inflate(layoutId, null);
+        return LayoutInflater.from(mContext).inflate(layoutId, null);
     }
 
     public void setTitle(String title) {
-        getActivity().setTitle(title);
+        ((Activity) mContext).setTitle(title);
     }
 
     /*  -------------网络请求------------ */
     @Override
     public void onRequestCallBack(int requestCode, String result, boolean success) {
-        if (!NetUtil.isConnect(getActivity())) {
+        if (!NetUtil.isConnect(mContext)) {
             toast("请保持网络连接");
         } else if (!success) {
             toast("请求出现异常");
