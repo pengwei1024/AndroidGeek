@@ -3,6 +3,7 @@ package com.apkfuns.androidgank.ui;
 import android.net.Uri;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.widget.NestedScrollView;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -32,6 +33,8 @@ public class GankContent extends BaseTabActivity implements View.OnClickListener
     private String date;
     private String imageUrl;
     private NestedScrollView nestedScrollView;
+    private CollapsingToolbarLayout collapsingToolbar;
+    private SimpleDraweeView simpleDraweeView;
 
     @Override
     protected int getContentView() {
@@ -40,8 +43,8 @@ public class GankContent extends BaseTabActivity implements View.OnClickListener
 
     @Override
     protected void initTab() {
-        nestedScrollView = findView(R.id.nestedScrollView);
-        nestedScrollView.setFillViewport(true);
+//        nestedScrollView = findView(R.id.nestedScrollView);
+//        nestedScrollView.setFillViewport(true);
         date = getIntent().getStringExtra("date");
         if (date.length() == 10) {
             String[] dateParam = date.split("-");
@@ -49,11 +52,18 @@ public class GankContent extends BaseTabActivity implements View.OnClickListener
                     dateParam[0], dateParam[1], dateParam[2]), 0);
         }
         imageUrl = getIntent().getStringExtra("imageUrl");
-        SimpleDraweeView simpleDraweeView = findView(R.id.backdrop);
+        simpleDraweeView = findView(R.id.backdrop);
         simpleDraweeView.setImageURI(Uri.parse(imageUrl));
         simpleDraweeView.setOnClickListener(this);
-        CollapsingToolbarLayout collapsingToolbar = findView(R.id.collapsing_toolbar);
+        collapsingToolbar = findView(R.id.collapsing_toolbar);
         collapsingToolbar.setTitle(date);
+//        findView(R.id.x).setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                Log.d("TAG", "onTouch: onTouch()");
+//                return collapsingToolbar.onTouchEvent(event);
+//            }
+//        });
     }
 
     @Override
@@ -71,6 +81,13 @@ public class GankContent extends BaseTabActivity implements View.OnClickListener
                                         new TypeToken<ArrayList<GankWelfareItem.ResultsEntity>>() {
                                         }.getType());
                         addTitleAndFragment(categoryName, GankContentArticleFragment.getInstance(lists));
+//                        new View.OnTouchListener() {
+//                            @Override
+//                            public boolean onTouch(View v, MotionEvent event) {
+//                                Log.d("TAG", "onTouch: OnTouchListener()");
+//                                return simpleDraweeView.onTouchEvent(event);
+//                            }
+//                        })
 //                        addTitleAndFragment(categoryName, new TestFragment());
                     }
                     tabShow();

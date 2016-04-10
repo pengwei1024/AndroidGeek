@@ -22,16 +22,16 @@ public class EnableRecyclerView extends RecyclerView {
         super(context, attrs, defStyle);
     }
 
-    @Override
-    protected void onMeasure(int widthSpec, int heightSpec) {
-        int newHeightSpec = MeasureSpec.makeMeasureSpec(Integer.MAX_VALUE >> 2,
-                MeasureSpec.AT_MOST);
-        super.onMeasure(widthSpec, newHeightSpec);
-    }
+//    @Override
+//    protected void onMeasure(int widthSpec, int heightSpec) {
+//        int newHeightSpec = MeasureSpec.makeMeasureSpec(Integer.MAX_VALUE >> 2,
+//                MeasureSpec.AT_MOST);
+//        super.onMeasure(widthSpec, newHeightSpec);
+//    }
 
     @Override
     public boolean onTouchEvent(MotionEvent e) {
-        return true;
+        return false;
     }
 
 //    @Override

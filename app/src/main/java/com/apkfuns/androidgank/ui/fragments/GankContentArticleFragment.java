@@ -5,7 +5,9 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -28,6 +30,7 @@ import java.util.List;
 public class GankContentArticleFragment extends BaseFragment {
 
     RecyclerView recyclerView;
+    private static View.OnTouchListener listener;
 
     private static final String DATA_LIST = "data_list";
 
@@ -39,11 +42,24 @@ public class GankContentArticleFragment extends BaseFragment {
         return fragment;
     }
 
+    public static GankContentArticleFragment getInstance(ArrayList<GankWelfareItem.ResultsEntity> list,
+                                                         View.OnTouchListener listener) {
+        GankContentArticleFragment fragment = new GankContentArticleFragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(DATA_LIST, list);
+        fragment.setArguments(bundle);
+        GankContentArticleFragment.listener = listener;
+        return fragment;
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        recyclerView = new EnableRecyclerView(getActivity());
+        recyclerView = new RecyclerView(getActivity());
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        if (listener != null) {
+            recyclerView.setOnTouchListener(listener);
+        }
         final List<GankWelfareItem.ResultsEntity> dataList = (List<GankWelfareItem.ResultsEntity>) getArguments().getSerializable(DATA_LIST);
         recyclerView.setAdapter(new SimpleRecyclerAdapter<GankWelfareItem.ResultsEntity>(
                 R.layout.adapter_gank_content_item, dataList) {
